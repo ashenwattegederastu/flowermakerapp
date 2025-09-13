@@ -1,177 +1,214 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<title>Made with Love</title>
-<style>
-/* Base Styles */
-body {
-    margin: 0;
-    font-family: 'Segoe UI', sans-serif;
-    background: #fff9e6; /* soft pastel yellow */
-    color: #b38f00; /* warm brownish accent */
-}
-.page-flex {
-    display: flex;
-    flex-direction: column;
-    min-height: 100vh;
-}
-.main-content {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 20px 16px;
-    flex-grow: 1;
-}
-
-/* Title */
-h1 {
-    font-size: clamp(1.5em, 5vw, 2em);
-    margin-bottom: 16px;
-    text-align: center;
-}
-
-/* Flower */
-.flower {
-    width: clamp(120px, 40%, 220px);
-    margin: 16px 0;
-}
-.flower img {
-    width: 100%;
-    height: auto;
-    border-radius: 16px;
-    box-shadow: 0 2px 12px rgba(179, 143, 0, 0.25);
-}
-
-/* Quote box */
-.quote {
-    font-size: clamp(1em, 4vw, 1.3em);
-    text-align: center;
-    max-width: 90%;
-    background: #fff8d6;
-    padding: 14px 18px;
-    border-radius: 18px;
-    box-shadow: 0 2px 12px rgba(179, 143, 0, 0.25);
-    margin-bottom: 16px;
-}
-
-/* Language button */
-.lang-btn {
-    padding: 10px 20px;
-    border: none;
-    background: #b38f00;
-    color: #fff;
-    border-radius: 8px;
-    font-size: clamp(0.9em, 3vw, 1em);
-    cursor: pointer;
-    transition: background 0.2s;
-    margin-bottom: 20px;
-}
-.lang-btn:hover {
-    background: #997800;
-}
-
-/* Footer */
-footer {
-    text-align: center;
-    font-weight: bold;
-    padding: 12px 16px;
-}
-#footerText {
-    font-size: clamp(1em, 4vw, 1.5em);
-}
-
-/* Responsive tweaks for small screens */
-@media (max-width: 600px) {
-    .main-content {
-        padding: 16px 12px;
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Flower Giver</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: "Segoe UI", sans-serif;
+      background: #fff9e6; /* soft pastel yellow */
+      display: flex;
+      min-height: 100vh;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      color: #5a4a00;
     }
-    .flower {
-        width: 70%;
+
+    .container {
+      text-align: center;
+      width: 100%;
+      max-width: 520px;
+      background: transparent;
+      padding: 20px;
+      border-radius: 12px;
+      box-sizing: border-box;
     }
-    .quote {
-        font-size: 1em;
-        padding: 12px 14px;
-    }
+
     h1 {
-        font-size: 1.5em;
-        margin-bottom: 12px;
+      color: #b8860b;
+      font-size: clamp(1.4rem, 5vw, 2rem);
+      margin: 0 0 18px 0;
+      font-weight: 700;
     }
-}
-</style>
+
+    .flower {
+      display: flex;
+      justify-content: center;
+      margin-bottom: 18px;
+    }
+
+    .flower img {
+      width: 100%;
+      max-width: 300px;
+      height: auto;
+      border-radius: 12px;
+      box-shadow: 0 6px 18px rgba(0,0,0,0.12);
+      display: block;
+    }
+
+    .quote {
+      font-size: clamp(1rem, 3.6vw, 1.2rem);
+      color: #5a4a00;
+      background: #fff;
+      padding: 12px 16px;
+      border-radius: 12px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+      margin: 0 auto 16px auto;
+      max-width: 90%;
+      line-height: 1.4;
+    }
+
+    .controls {
+      margin-top: 12px;
+      display: flex;
+      gap: 12px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .lang-btn, .new-btn {
+      padding: 10px 16px;
+      font-size: clamp(0.95rem, 3vw, 1rem);
+      background: #b8860b;
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+    .lang-btn:hover, .new-btn:hover { background: #9c7409; }
+
+    footer {
+      text-align: center;
+      padding: 12px;
+      font-size: clamp(0.95rem, 3.5vw, 1.1rem);
+      font-weight: 700;
+      color: #b8860b;
+      margin-top: 18px;
+    }
+
+    /* small devices */
+    @media (max-width: 420px) {
+      .flower img { max-width: 240px; }
+      h1 { margin-bottom: 12px; }
+      .quote { padding: 10px 12px; }
+    }
+  </style>
 </head>
 <body>
-<div class="page-flex">
-    <div class="main-content">
-        <h1 id="mainTitle"></h1>
-        <div class="flower" id="flower"></div>
-        <div class="quote" id="quote"></div>
-        <button class="lang-btn" id="langBtn">显示中文 / Show Chinese</button>
+  <div class="container" role="main" aria-labelledby="mainTitle">
+    <h1 id="mainTitle">Hey 张茜媛</h1>
+
+    <div class="flower" id="flowerContainer" aria-hidden="false">
+      <!-- image inserted by JS -->
     </div>
-    <footer>
-        <div id="footerText"></div>
-    </footer>
-</div>
 
-<script>
-const flowers = [
-    { img: "images/pexels-brett-sayles-992734.jpg", name: "Flower 1" },
-    { img: "images/pexels-hieu-1179863.jpg", name: "Flower 2" },
-    { img: "images/pexels-john-289283-1369068.jpg", name: "Flower 3" },
-    { img: "images/pexels-jonaskakaroto-736230.jpg", name: "Flower 4" },
-    { img: "images/pexels-pixabay-36753.jpg", name: "Flower 5" },
-    { img: "images/pexels-pixabay-39517.jpg", name: "Flower 6" },
-    { img: "images/pexels-pixabay-46216.jpg", name: "Flower 7" },
-    { img: "images/pexels-pixabay-53135.jpg", name: "Flower 8" },
-    { img: "images/pexels-pixabay-55748.jpg", name: "Flower 9" },
-    { img: "images/pexels-pixabay-56866.jpg", name: "Flower 10" },
-    { img: "images/pexels-pixabay-60597.jpg", name: "Flower 11" },
-    { img: "images/pexels-pixabay-64221.jpg", name: "Flower 12" },
-    { img: "images/pexels-secret-garden-333350-931181.jpg", name: "Flower 13" }
-];
+    <div class="quote" id="quoteText" aria-live="polite">
+      <!-- quote inserted by JS -->
+    </div>
 
-const quotes = [
-    { en: "You are the sunshine that helps me bloom.", zh: "你是让我绽放的阳光。" },
-    { en: "Every flower is a soul blossoming in nature.", zh: "每一朵花都是大自然中绽放的灵魂。" },
-    { en: "Like a flower, you bring beauty to the world.", zh: "像花一样，你为世界带来美丽。" },
-    { en: "May your day be as lovely as this flower.", zh: "愿你的一天如这朵花般美好。" },
-    { en: "Love is the flower you've got to let grow.", zh: "爱是一朵需要你让它生长的花。" },
-    { en: "You make my heart blossom.", zh: "你让我的心绽放。" },
-    { en: "A flower for you, because you make life beautiful.", zh: "送你一朵花，因为你让生活变得美丽。" },
-    { en: "Let your dreams blossom like this flower.", zh: "让你的梦想像这朵花一样绽放。" },
-    { en: "You are the reason my garden grows.", zh: "你是我的花园繁盛的原因。" },
-    { en: "Bloom where you are planted.", zh: "在你被种下的地方绽放。" }
-];
+    <div class="controls" role="region" aria-label="controls">
+      <button class="lang-btn" id="langBtn" aria-pressed="false">显示中文 / Show Chinese</button>
+      <button class="new-btn" id="newBtn">New Flower</button>
+    </div>
+  </div>
 
-function randomItem(arr) { return arr[Math.floor(Math.random() * arr.length)]; }
+  <footer id="footerText">You are the flower 🌼</footer>
 
-let showingChinese = localStorage.getItem('showingChinese') === 'true';
-const flower = randomItem(flowers);
-const quote = randomItem(quotes);
+  <script>
+    // Local images (package them in your app at images/)
+    const flowers = [
+      { img: "images/pexels-brett-sayles-992734.jpg", name: "Sunflowers" },
+      { img: "images/pexels-hieu-1179863.jpg", name: "Pink bloom" },
+      { img: "images/pexels-john-289283-1369068.jpg", name: "White petals" },
+      { img: "images/pexels-jonaskakaroto-736230.jpg", name: "Red rose" },
+      { img: "images/pexels-pixabay-36753.jpg", name: "Daisy" },
+      { img: "images/pexels-pixabay-39517.jpg", name: "Yellow blossoms" },
+      { img: "images/pexels-pixabay-46216.jpg", name: "Orange petals" },
+      { img: "images/pexels-pixabay-53135.jpg", name: "Pastel bouquet" },
+      { img: "images/pexels-pixabay-55748.jpg", name: "Purple flower" },
+      { img: "images/pexels-pixabay-56866.jpg", name: "Pink garden" },
+      { img: "images/pexels-pixabay-60597.jpg", name: "Spring bloom" },
+      { img: "images/pexels-pixabay-64221.jpg", name: "Blue petals" },
+      { img: "images/pexels-secret-garden-333350-931181.jpg", name: "Secret garden" }
+    ];
 
-function setMainTitle() {
-    document.getElementById('mainTitle').textContent = showingChinese ? "嗨 张茜媛" : "Hey 张茜媛";
-}
-function setFooterText() {
-    document.getElementById('footerText').textContent = showingChinese
+    // Quotes (english / chinese)
+    const quotes = [
+      { en: "You are the sunshine that helps me bloom.", zh: "你是让我绽放的阳光。" },
+      { en: "Every flower is a soul blossoming in nature.", zh: "每一朵花都是大自然中绽放的灵魂。" },
+      { en: "Like a flower, you bring beauty to the world.", zh: "像花一样，你为世界带来美丽。" },
+      { en: "May your day be as lovely as this flower.", zh: "愿你的一天如这朵花般美好。" },
+      { en: "Love is the flower you've got to let grow.", zh: "爱是一朵需要你让它生长的花。" },
+      { en: "You make my heart blossom.", zh: "你让我的心绽放。" },
+      { en: "A flower for you, because you make life beautiful.", zh: "送你一朵花，因为你让生活变得美丽。" },
+      { en: "Let your dreams blossom like this flower.", zh: "让你的梦想像这朵花一样绽放。" },
+      { en: "You are the reason my garden grows.", zh: "你是我的花园繁盛的原因。" },
+      { en: "Bloom where you are planted.", zh: "在你被种下的地方绽放。" }
+    ];
+
+    // Helpers
+    function randomItem(arr) {
+      return arr[Math.floor(Math.random() * arr.length)];
+    }
+
+    // App state
+    let showingChinese = localStorage.getItem('showingChinese') === 'true';
+    let currentFlower = randomItem(flowers);
+    let currentQuote = randomItem(quotes);
+
+    // Elements
+    const flowerContainer = document.getElementById('flowerContainer');
+    const quoteText = document.getElementById('quoteText');
+    const footerText = document.getElementById('footerText');
+    const langBtn = document.getElementById('langBtn');
+    const newBtn = document.getElementById('newBtn');
+
+    // Render content
+    function render() {
+      // image
+      flowerContainer.innerHTML = `<img src="${currentFlower.img}" alt="${currentFlower.name}">`;
+
+      // quote & footer
+      quoteText.textContent = showingChinese ? currentQuote.zh : currentQuote.en;
+      footerText.textContent = showingChinese
         ? "由爱与AI哈哈制作，作者 Ashen Wattegedera"
         : "Made with Love and AI haha by Ashen Wattegedera";
-}
 
-setMainTitle();
-setFooterText();
-document.getElementById('flower').innerHTML = `<img src="${flower.img}" alt="${flower.name}">`;
-document.getElementById('quote').textContent = showingChinese ? quote.zh : quote.en;
-document.getElementById('langBtn').textContent = showingChinese ? "Show English / 显示英文" : "显示中文 / Show Chinese";
+      // button label (action / what it will do)
+      langBtn.textContent = showingChinese ? "Show English / 显示英文" : "显示中文 / Show Chinese";
+      langBtn.setAttribute('aria-pressed', showingChinese ? 'true' : 'false');
+    }
 
-document.getElementById('langBtn').addEventListener('click', function() {
-    showingChinese = !showingChinese;
-    localStorage.setItem('showingChinese', showingChinese);
-    setMainTitle();
-    setFooterText();
-    document.getElementById('quote').textContent = showingChinese ? quote.zh : quote.en;
-    this.textContent = showingChinese ? "Show English / 显示英文" : "显示中文 / Show Chinese";
-});
-</script>
+    // Toggle language
+    function toggleLanguage() {
+      showingChinese = !showingChinese;
+      localStorage.setItem('showingChinese', showingChinese);
+      render();
+    }
+
+    // New random flower + quote
+    function newFlowerAndQuote() {
+      // pick new flower and quote (allow repeats though)
+      currentFlower = randomItem(flowers);
+      currentQuote = randomItem(quotes);
+      render();
+    }
+
+    // Init
+    window.addEventListener('load', () => {
+      // If you want a consistent seed or saved selection, implement here.
+      render();
+    });
+
+    // Event bindings
+    langBtn.addEventListener('click', toggleLanguage);
+    newBtn.addEventListener('click', newFlowerAndQuote);
+
+    // Optional: allow tapping image to get a new one
+    flowerContainer.addEventListener('click', newFlowerAndQuote);
+  </script>
 </body>
 </html>
