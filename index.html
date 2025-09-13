@@ -6,9 +6,10 @@
 <style>
 /* Base Styles */
 body {
-    background: #fff0f6;
     margin: 0;
     font-family: 'Segoe UI', sans-serif;
+    background: #fff9e6; /* soft pastel yellow */
+    color: #b38f00; /* warm brownish accent */
 }
 .page-flex {
     display: flex;
@@ -19,112 +20,82 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
+    padding: 20px 16px;
     flex-grow: 1;
-    padding: 20px;
 }
+
+/* Title */
+h1 {
+    font-size: clamp(1.5em, 5vw, 2em);
+    margin-bottom: 16px;
+    text-align: center;
+}
+
+/* Flower */
 .flower {
-    width: 200px;
-    height: 200px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin: 20px 0;
+    width: clamp(120px, 40%, 220px);
+    margin: 16px 0;
 }
 .flower img {
     width: 100%;
     height: auto;
     border-radius: 16px;
-    box-shadow: 0 2px 12px #d7266022;
-}
-.quote {
-    font-size: 1.2em;
-    color: #d72660;
-    text-align: center;
-    max-width: 320px;
-    background: #fff;
-    padding: 14px 16px;
-    border-radius: 18px;
-    box-shadow: 0 2px 12px #d7266022;
-    margin-bottom: 16px;
-}
-h1 {
-    color: #d72660;
-    font-size: 2em;
-    margin-bottom: 12px;
-    text-align: center;
-}
-.lang-btn {
-    margin-top: 12px;
-    padding: 10px 20px;
-    border: none;
-    background: #d72660;
-    color: #fff;
-    border-radius: 8px;
-    font-size: 1em;
-    cursor: pointer;
-    transition: background 0.2s;
-}
-.lang-btn:hover {
-    background: #b91d4a;
-}
-#footerText {
-    font-size: 1.4em;
-    color: #d72660;
-    text-align: center;
-    font-weight: bold;
-    padding: 12px;
-    margin-bottom: 12px;
+    box-shadow: 0 2px 12px rgba(179, 143, 0, 0.25);
 }
 
-/* Mobile Optimization */
+/* Quote box */
+.quote {
+    font-size: clamp(1em, 4vw, 1.3em);
+    text-align: center;
+    max-width: 90%;
+    background: #fff8d6;
+    padding: 14px 18px;
+    border-radius: 18px;
+    box-shadow: 0 2px 12px rgba(179, 143, 0, 0.25);
+    margin-bottom: 16px;
+}
+
+/* Language button */
+.lang-btn {
+    padding: 10px 20px;
+    border: none;
+    background: #b38f00;
+    color: #fff;
+    border-radius: 8px;
+    font-size: clamp(0.9em, 3vw, 1em);
+    cursor: pointer;
+    transition: background 0.2s;
+    margin-bottom: 20px;
+}
+.lang-btn:hover {
+    background: #997800;
+}
+
+/* Footer */
+footer {
+    text-align: center;
+    font-weight: bold;
+    padding: 12px 16px;
+}
+#footerText {
+    font-size: clamp(1em, 4vw, 1.5em);
+}
+
+/* Responsive tweaks for small screens */
 @media (max-width: 600px) {
-    .flower {
-        width: 150px;
-        height: 150px;
-        margin: 16px 0;
+    .main-content {
+        padding: 16px 12px;
     }
-    .flower img {
-        max-height: 150px;
+    .flower {
+        width: 70%;
     }
     .quote {
         font-size: 1em;
-        max-width: 90%;
-        padding: 12px 10px;
+        padding: 12px 14px;
     }
     h1 {
         font-size: 1.5em;
-        margin-bottom: 10px;
-    }
-    .lang-btn {
-        font-size: 0.95em;
-        padding: 8px 14px;
-        margin-top: 10px;
-    }
-    #footerText {
-        font-size: 1.2em;
-        padding: 8px;
-        margin-top: 8px;
-    }
-}
-
-/* Medium Screens */
-@media (min-width: 601px) and (max-width: 900px) {
-    .flower {
-        width: 180px;
-        height: 180px;
-    }
-    .flower img {
-        max-height: 180px;
-    }
-    .quote {
-        font-size: 1.15em;
-        max-width: 80vw;
-    }
-    h1 {
-        font-size: 1.8em;
-    }
-    #footerText {
-        font-size: 1.5em;
+        margin-bottom: 12px;
     }
 }
 </style>
@@ -172,9 +143,7 @@ const quotes = [
     { en: "Bloom where you are planted.", zh: "在你被种下的地方绽放。" }
 ];
 
-function randomItem(arr) {
-    return arr[Math.floor(Math.random() * arr.length)];
-}
+function randomItem(arr) { return arr[Math.floor(Math.random() * arr.length)]; }
 
 let showingChinese = localStorage.getItem('showingChinese') === 'true';
 const flower = randomItem(flowers);
